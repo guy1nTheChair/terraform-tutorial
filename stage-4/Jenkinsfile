@@ -1,0 +1,26 @@
+pipeline{
+    agent any
+
+    stages{
+        stage("Init"){
+            steps{
+                sh "terraform init --backend-config=backend/.txt"
+            }
+        }
+        stage("Validate"){
+            steps{
+                sh "terraform validate "
+            }
+        }
+        stage("Plan"){
+            steps{
+                sh "terraform plan --var-file=.tfavrs"
+            }
+        }
+        stage("Apply"){
+            steps{
+                sh "terraform apply --var-file=.tfavrs"
+            }
+        }
+    }
+}
