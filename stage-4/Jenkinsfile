@@ -1,6 +1,5 @@
 pipeline{
     agent any
-
     stages{
         stage("Init"){
             steps{
@@ -9,7 +8,7 @@ pipeline{
         }
         stage("Validate"){
             steps{
-                sh "terraform validate "
+                sh "terraform validate"
             }
         }
         stage("Plan"){

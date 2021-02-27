@@ -1,13 +1,13 @@
 provider "aws" {
-  region = "ap-south-1"
+  region = var.region
 }
 
 
 resource "aws_instance" "instance" {
-  key_name = "my-first-key-pair"
-  ami                    = "ami-02d55cb47e83a99a0"
-  instance_type          = "t2.micro"
+  key_name = var.key_pair
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   user_data              = "${file("user_data.sh")}"
-  vpc_security_group_ids = ["sg-0a6d1ad9f4e41a468"]
-  iam_instance_profile   = "admin"
+  vpc_security_group_ids = var.security_group
+  iam_instance_profile   = var.instance_profile
 }
