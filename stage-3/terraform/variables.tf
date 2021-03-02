@@ -1,8 +1,11 @@
-var "region" {}
-var "ami_id" {}
-var "instance_name" {}
-var "instance_type" {}
-var "instance_profile" {}
-var "key_pair" {}
-var "security_group" {}
-var "env" {}
+variable "region" {}
+variable "ami_id" {}
+variable "instance_name" {}
+variable "instance_type" {}
+variable "instance_profile" {}
+variable "key_pair" {}
+variable "security_group" {
+  type        = list(string)
+  default     = []
+  description = "List of security groups"
+}

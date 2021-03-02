@@ -1,9 +1,19 @@
 pipeline{
     agent any
     stages{
+        stage('Build JAR'){
+            steps{
+                sh 'cd stage-4/api/terraform-demo/; ./mvnw clean install;'
+            } 
+        }
+        stage('Build and Push image'){
+            steps{
+                sh 'cd stage-4/api/terraform-demo/; docker build -t sb-terraform-demo:1.0 .; docker tag sb-terraform-demo:1.0 <user-name>/<repo-name>:<version>; docker push <user-name>/<repo-name>:<version>; '
+            }
+        }
         stage("Init"){
             steps{
-                sh "terraform init --backend-config=backend/.txt"
+                sh "terraform init --backend-config=backend/dev.txt"
             }
         }
         stage("Validate"){
@@ -13,12 +23,12 @@ pipeline{
         }
         stage("Plan"){
             steps{
-                sh "terraform plan --var-file=.tfavrs"
+                sh "terraform plan --var-file=dev.tfavrs"
             }
         }
         stage("Apply"){
             steps{
-                sh "terraform apply --var-file=.tfavrs"
+                sh "terraform apply --var-file=dev.tfavrs --auto-approve"
             }
         }
     }
